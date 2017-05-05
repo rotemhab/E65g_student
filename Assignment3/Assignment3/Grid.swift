@@ -22,7 +22,7 @@ public func positionSequence (from: Position, to: Position) -> PositionSequence 
         .flatMap { $0 }
 }
 
-public enum CellState {
+public enum CellState : String {
     case alive, empty, born, died
     
     public var isAlive: Bool {

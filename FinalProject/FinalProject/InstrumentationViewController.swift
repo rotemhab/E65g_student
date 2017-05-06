@@ -12,7 +12,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
     
     @IBOutlet weak var tableView: UITableView!
     var tableTitles: [String] = []
-    var content: NSArray = []
+    var content: [[[Int]]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,6 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                 //print(json)
                 let resultString = (json as AnyObject).description
                 let jsonArray = json as! NSArray
-                print(type(of: jsonArray))
                 let jsonDictionary = jsonArray[0] as! NSDictionary
                 let jsonTitle = jsonDictionary["title"] as! String
                 let jsonContents = jsonDictionary["contents"] as! [[Int]]
@@ -60,27 +59,47 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                     for i in 0...jsonArray.count-1 {
                         let jsonDictionary = jsonArray[i] as! NSDictionary
                         let jsonTitle = jsonDictionary["title"] as! String
+                        let jsonContents = jsonDictionary["contents"] as! [[Int]]
                         self.tableTitles.append(jsonTitle)
+                        self.content.append(jsonContents)
+                        //print(jsonContents[0].max() as Int!)
+                        
                     }
                         self.tableView.reloadData()
                 }
             }
         }
+    
+    func getGridSize(_ contentArray:[[Int]])->Int{
+        var maxValue = 0
+        for i in 0...contentArray.count-1 {
+            if contentArray[i].max()! > maxValue {
+                maxValue = contentArray[i].max()!
+            }
+        }
+        return maxValue
+    }
 
 
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let indexPath = tableView.indexPathForSelectedRow
-//        if let indexPath = indexPath {
-//            let fruitValue = data[indexPath.section][indexPath.row]
-//            if let vc = segue.destination as? GridEditorViewController {
-//                vc.fruitValue = fruitValue
-//                vc.saveClosure = { newValue in
-//                    data[indexPath.section][indexPath.row] = newValue
-//                    self.tableView.reloadData()
-//                }
-//            }
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let indexPath = tableView.indexPathForSelectedRow
+        print(indexPath?.section)
+        if let indexPath = indexPath {
+            let gridTitle = tableTitles[indexPath.section]
+            let maxGridSize = getGridSize(content[indexPath.section])*2
+            let livingCellsArray = content[indexPath.section]
+            print (maxGridSize)
+            if let vc = segue.destination as? InstrumentationViewController2 {
+                vc.gridTitle = gridTitle
+                vc.maxGridSize = maxGridSize
+                vc.livingCellsArray = livingCellsArray
+                vc.saveClosure = { newValue in
+                    self.tableTitles[indexPath.section] = newValue
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
 
 }
 

@@ -143,12 +143,12 @@ protocol EngineProtocol {
 
 class Engine: EngineProtocol {
     static var engine: Engine = Engine(rows: 10, cols: 10)
-
+    
+    var timer: Timer?
     var grid: Grid
     var delegate: EngineDelegate?
     
     var updateClosure: ((Grid) -> Void)?
-    var timer: Timer?
     var timerInterval: TimeInterval = 0.0 {
         didSet {
             if timerInterval > 0.0 {

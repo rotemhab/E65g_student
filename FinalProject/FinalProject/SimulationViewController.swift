@@ -142,7 +142,7 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
     }
     
     @IBAction func start(_ sender: Any) {
-        engine.timerInterval = 1.0
+        engine.timerInterval = 0.1
     }
     
     //MARK: Stepper Event Handling

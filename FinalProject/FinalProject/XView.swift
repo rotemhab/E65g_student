@@ -55,16 +55,22 @@ public protocol GridViewDataSource {
                     height: size.height - 4.0
                 )
                 let ovalRect = CGRect( origin: ovalOrigin, size: ovalSize )
-                if let grid = gridDataSource, grid[i,j].isAlive {
-                    drawOval(ovalRect)
+                if let grid = gridDataSource {
+                    var thisCellState = grid[i,j]
+                    drawOval(ovalRect, thisCellState)
                 }
             }
         }
     }
     
-    func drawOval(_ ovalRect: CGRect) {
+    func drawOval(_ ovalRect: CGRect, _ cellState:CellState) {
         let path = UIBezierPath(ovalIn: ovalRect)
-        livingColor.setFill()
+        switch(cellState){
+            case .empty: emptyColor.setFill()
+            case .alive: livingColor.setFill()
+            case .born: bornColor.setFill()
+            case .died: diedColor.setFill()
+        }
         path.fill()
     }
     

@@ -14,8 +14,16 @@ public protocol GridViewDataSource {
 
 @IBDesignable class XView: UIView {
 
-    @IBInspectable var fillColor = UIColor.darkGray
-    @IBInspectable var gridSize: Int = 3 
+    @IBInspectable var livingColor = UIColor.darkGray
+    @IBInspectable var emptyColor = UIColor.clear
+    @IBInspectable var bornColor = UIColor.blue
+    @IBInspectable var diedColor = UIColor.red
+    @IBInspectable var gridColor = UIColor.lightGray
+    @IBInspectable var gridWidth:CGFloat = 2.0
+    
+    
+    
+    @IBInspectable var gridSize: Int = 20
     // Updated since class
     var gridDataSource: GridViewDataSource?
     
@@ -56,7 +64,7 @@ public protocol GridViewDataSource {
     
     func drawOval(_ ovalRect: CGRect) {
         let path = UIBezierPath(ovalIn: ovalRect)
-        fillColor.setFill()
+        livingColor.setFill()
         path.fill()
     }
     
@@ -80,7 +88,7 @@ public protocol GridViewDataSource {
         let path = UIBezierPath()
         
         //set the path's line width to the height of the stroke
-        path.lineWidth = 2.0
+        path.lineWidth = gridWidth
         
         //move the initial point of the path
         //to the start of the horizontal stroke
@@ -90,7 +98,7 @@ public protocol GridViewDataSource {
         path.addLine(to: end)
         
         //draw the stroke
-        UIColor.cyan.setStroke()
+        gridColor.setStroke()
         path.stroke()
     }
     

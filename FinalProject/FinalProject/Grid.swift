@@ -180,7 +180,7 @@ class Engine: EngineProtocol {
           let n = Notification(name: name,
                                object: nil,
                                userInfo: ["engine" : self])
-                               nc.post(n)
+            nc.post(n)
         return grid
     }
 }

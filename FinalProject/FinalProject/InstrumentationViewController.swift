@@ -83,12 +83,10 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let indexPath = tableView.indexPathForSelectedRow
-        print(indexPath?.section)
         if let indexPath = indexPath {
             let gridTitle = tableTitles[indexPath.section]
             let maxGridSize = getGridSize(content[indexPath.section])*2
             let livingCellsArray = content[indexPath.section]
-            print (maxGridSize)
             if let vc = segue.destination as? InstrumentationViewController2 {
                 vc.gridTitle = gridTitle
                 vc.maxGridSize = maxGridSize

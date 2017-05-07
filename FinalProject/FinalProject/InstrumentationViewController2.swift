@@ -20,7 +20,6 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
             var pos : GridPosition = GridPosition(row:0,col:0)
             pos.row = cellsArray[i][0]
             pos.col = cellsArray[i][1]
-            print(pos)
             self.livingCellsPositions.append(pos)
         }
     }
@@ -33,11 +32,6 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
         else {
             return .empty
         }
-    
-//        switch (pos.row, pos.col) {
-//        case (livingCellsArray[0][0],livingCellsArray[0][0]): return .alive
-//        default: return .empty
-//        }
     }
     
     @IBOutlet weak var InstrumentationGridView: XView!
@@ -48,7 +42,6 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
     override func viewDidLoad() {
         super.viewDidLoad()
         livingCellsArrayToPositions(livingCellsArray)
-        print(livingCellsPositions)
         if let gridTitle = gridTitle {
             gridNameTextField.text = gridTitle
         }
@@ -122,11 +115,48 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
         self.present(alert, animated: true, completion: nil)
     }
     @IBAction func save(_ sender: Any) {
+        
+        //send the grid name back to the first screen
         if let newValue = gridNameTextField.text,
             let saveClosure = saveClosure {
             saveClosure(newValue)
             self.navigationController?.popViewController(animated: true)
         }
+        
+        //get the grid state
+        var bornPositions:[[Int]] = []
+        var alivePositions: [[Int]] = []
+        var diedPositions:[[Int]] = []
+        
+        for row in 0...maxGridSize-1{
+            for col in 0...maxGridSize-1{
+                if (engine.grid[row,col] == .born){
+                    bornPositions.append([row,col])
+                } else if (engine.grid[row,col] == .alive){
+                    alivePositions.append([row,col])
+                } else if (engine.grid[row,col] == .died){
+                    diedPositions.append([row,col])
+                }
+            }
+        }
+        //save the grid state to file
+        let defaults = UserDefaults.standard
+        defaults.set(bornPositions, forKey: "bornPositions")
+        defaults.set(alivePositions, forKey: "alivePositions")
+        defaults.set(diedPositions, forKey: "diedPositions")
+        defaults.set(maxGridSize, forKey: "maxGridSize")
+        
+        //create a new notification
+        let nc = NotificationCenter.default
+        let name = Notification.Name(rawValue: "gridSave")
+        let n = Notification(name: name,
+                             object: nil,
+                             userInfo:[
+                                "engine" : engine,
+                                "gridSize" : maxGridSize
+                            ])
+        nc.post(n)
+        
     }
 }
 

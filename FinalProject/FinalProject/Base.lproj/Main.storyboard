@@ -162,9 +162,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7M-jI-QUh" userLabel="Instrumentation Grid View" customClass="XView" customModule="FinalProject" customModuleProvider="target">
                                 <rect key="frame" x="24" y="170" width="327" height="327"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="o7M-jI-QUh" secondAttribute="height" multiplier="1:1" id="ChB-5h-2XO"/>
-                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="gridSize">
                                         <integer key="value" value="10"/>
@@ -189,14 +186,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="o7M-jI-QUh" secondAttribute="trailing" constant="8" id="8b5-TE-HEb"/>
+                            <constraint firstItem="o7M-jI-QUh" firstAttribute="centerY" secondItem="RwQ-7V-cIZ" secondAttribute="centerY" id="7E4-fb-uXD"/>
                             <constraint firstItem="qV9-MG-lNQ" firstAttribute="leading" secondItem="RwQ-7V-cIZ" secondAttribute="leadingMargin" constant="8" id="E3e-ms-Mo9"/>
-                            <constraint firstItem="0uR-cR-Uav" firstAttribute="top" secondItem="o7M-jI-QUh" secondAttribute="bottom" constant="121" id="QuG-Gq-sme"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="o7M-jI-QUh" secondAttribute="trailing" constant="8" id="NUl-ds-v6a"/>
                             <constraint firstItem="qV9-MG-lNQ" firstAttribute="top" secondItem="uSU-g1-64r" secondAttribute="bottom" constant="43" id="R1U-2j-kQA"/>
                             <constraint firstItem="y92-A4-Q0t" firstAttribute="centerY" secondItem="qV9-MG-lNQ" secondAttribute="centerY" id="SmK-6U-mLZ"/>
-                            <constraint firstItem="o7M-jI-QUh" firstAttribute="top" secondItem="uSU-g1-64r" secondAttribute="bottom" constant="106" id="bKw-RQ-mOH"/>
+                            <constraint firstItem="o7M-jI-QUh" firstAttribute="leading" secondItem="RwQ-7V-cIZ" secondAttribute="leadingMargin" constant="8" id="bzi-WY-AIY"/>
                             <constraint firstItem="o7M-jI-QUh" firstAttribute="width" secondItem="o7M-jI-QUh" secondAttribute="height" multiplier="1:1" id="fh1-yv-j9y"/>
-                            <constraint firstItem="o7M-jI-QUh" firstAttribute="leading" secondItem="RwQ-7V-cIZ" secondAttribute="leadingMargin" constant="8" id="t6z-q1-0KG"/>
+                            <constraint firstItem="o7M-jI-QUh" firstAttribute="centerX" secondItem="RwQ-7V-cIZ" secondAttribute="centerX" id="ijW-JE-yYO"/>
                             <constraint firstItem="y92-A4-Q0t" firstAttribute="centerX" secondItem="RwQ-7V-cIZ" secondAttribute="centerX" id="upb-Pp-HJq"/>
                         </constraints>
                     </view>

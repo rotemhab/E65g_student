@@ -13,18 +13,10 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
     @IBOutlet weak var gridView: XView!
     @IBOutlet weak var sizeStepper: UIStepper!
     
-    
     var engine: EngineProtocol!
     var timer: Timer?
     
-//    func getData(_ notification: NSNotification) {
-//        
-//        if let data = notification.userInfo?["maxGridSize"] {
-//            print(data)
-//            print("success!")
-//        }
-//    }
-    
+    //create a function to turn an array of array of integers to an array of positions
     func cellsArrayToPositions(_ cellsArray:[[Int]])->[GridPosition]{
         var positionArray:[GridPosition] = []
         if cellsArray.count > 0 {
@@ -33,36 +25,36 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
                 pos.row = cellsArray[i][0]
                 pos.col = cellsArray[i][1]
                 positionArray.append(pos)
-                var positionArray:[GridPosition] = []
+                //var positionArray:[GridPosition] = []
             }
             
         }
         return positionArray
     }
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //get the save defaults from file
         let defaults = UserDefaults.standard
         var recoveredBornPositions :[[Int]] = []
         var recoveredAlivePositions :[[Int]] = []
         var recoveredDiedPositions :[[Int]] = []
         var recoveredMaxGridSize :Int = 10
-
+        
         recoveredBornPositions = defaults.object(forKey: "bornPositions") as! [[Int]]
         recoveredAlivePositions = defaults.object(forKey: "alivePositions") as! [[Int]]
         recoveredDiedPositions = defaults.object(forKey: "diedPositions") as! [[Int]]
         recoveredMaxGridSize = defaults.object(forKey: "maxGridSize") as! Int
         
+        //create a function for initializing the grid according to the saved state
         func gridInitializer(_ pos: GridPosition) -> CellState {
-            if cellsArrayToPositions(recoveredAlivePositions as! [[Int]]).contains(pos) {
+            if cellsArrayToPositions(recoveredAlivePositions).contains(pos) {
                 return .alive
             }
-            else if (cellsArrayToPositions(recoveredDiedPositions as! [[Int]]).contains(pos)){
+            else if (cellsArrayToPositions(recoveredDiedPositions).contains(pos)){
                 return .died
-            } else if (cellsArrayToPositions(recoveredBornPositions as! [[Int]]).contains(pos)){
+            } else if (cellsArrayToPositions(recoveredBornPositions).contains(pos)){
                 return .born
             }
             else {
@@ -70,9 +62,10 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
             }
         }
         
+        //initialize the engine and draw the grid
         engine = Engine.engine
-        engine.grid = Grid(GridSize(rows: Int(recoveredMaxGridSize as! Int), cols: Int(recoveredMaxGridSize as! Int)),cellInitializer: gridInitializer)
-        gridView.gridSize = recoveredMaxGridSize as! Int
+        engine.grid = Grid(GridSize(rows: Int(recoveredMaxGridSize), cols: Int(recoveredMaxGridSize)),cellInitializer: gridInitializer)
+        gridView.gridSize = recoveredMaxGridSize
         gridView.livingColor = UIColor(red: 0.0, green: 0.9, blue: 0.0, alpha: 1.0)
         gridView.bornColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.6)
         gridView.emptyColor = UIColor(white: 0.3, alpha: 1.0)
@@ -84,8 +77,9 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
             self.gridView.setNeedsDisplay()
         }
         gridView.gridDataSource = self
-        sizeStepper.value = Double(engine.grid.size.rows)
+        //sizeStepper.value = Double(engine.grid.size.rows)?
         
+        //create a notification observer for engine updates, grid save in instrumentation and instrumentation controllers change
         let nc = NotificationCenter.default
         let name = Notification.Name(rawValue: "EngineUpdate")
         let name2 = Notification.Name(rawValue: "gridSave")
@@ -144,22 +138,58 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
         gridView.setNeedsDisplay()
     }
     
+    @IBAction func start(_ sender: Any) {
+        engine.timerInterval = 0.1
+    }
     @IBAction func stop(_ sender: Any) {
         engine.timerInterval = 0.0
     }
     
-    @IBAction func start(_ sender: Any) {
-        engine.timerInterval = 0.1
-    }
-    
-    //MARK: Stepper Event Handling
-    @IBAction func step(_ sender: UIStepper) {
-        engine.grid = Grid(GridSize(rows: Int(sender.value), cols: Int(sender.value) + 5))
-        gridView.gridSize = Int(sender.value)
+    @IBAction func ResetGrid(_ sender: Any) {
+        let currentGridSize = gridView.gridSize
+        engine.grid = Grid(GridSize(rows: currentGridSize, cols: currentGridSize))
         gridView.setNeedsDisplay()
     }
     
-    //MARK: AlertController Handling
+    
+    @IBAction func save(_ sender: Any) {
+        
+        //get the grid state
+        var bornPositions:[[Int]] = []
+        var alivePositions: [[Int]] = []
+        var diedPositions:[[Int]] = []
+        
+        for row in 0...gridView.gridSize-1{
+            for col in 0...gridView.gridSize-1{
+                if (engine.grid[row,col] == .born){
+                    bornPositions.append([row,col])
+                } else if (engine.grid[row,col] == .alive){
+                    alivePositions.append([row,col])
+                } else if (engine.grid[row,col] == .died){
+                    diedPositions.append([row,col])
+                }
+            }
+        }
+        //save the grid state to file
+        let defaults = UserDefaults.standard
+        defaults.set(bornPositions, forKey: "bornPositions")
+        defaults.set(alivePositions, forKey: "alivePositions")
+        defaults.set(diedPositions, forKey: "diedPositions")
+        defaults.set(gridView.gridSize, forKey: "maxGridSize")
+        
+        //create a new notification with the grid state and size
+        let nc = NotificationCenter.default
+        let name = Notification.Name(rawValue: "gridSave")
+        let n = Notification(name: name,
+                             object: nil,
+                             userInfo:[
+                                "engine" : engine,
+                                "gridSize" : gridView.gridSize
+            ])
+        nc.post(n)
+        
+    }
+    
     func showErrorAlert(withMessage msg:String, action: (() -> Void)? ) {
         let alert = UIAlertController(
             title: "Alert",

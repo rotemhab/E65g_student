@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5E19629E1EBA59BF00CCD940 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E19629D1EBA59BF00CCD940 /* StatisticsViewController.swift */; };
 		5E1962A21EBC5FF900CCD940 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1962A11EBC5FF900CCD940 /* Fetcher.swift */; };
-		5E1962A41EBC60D100CCD940 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1962A31EBC60D100CCD940 /* Constant.swift */; };
 		5E1962A61EBC715900CCD940 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1962A51EBC715900CCD940 /* Grid.swift */; };
 		5E1962A81EBC716000CCD940 /* GridProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1962A71EBC716000CCD940 /* GridProtocol.swift */; };
 		5E1962AA1EBC716500CCD940 /* XView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1962A91EBC716500CCD940 /* XView.swift */; };
@@ -25,7 +24,6 @@
 /* Begin PBXFileReference section */
 		5E19629D1EBA59BF00CCD940 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		5E1962A11EBC5FF900CCD940 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
-		5E1962A31EBC60D100CCD940 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		5E1962A51EBC715900CCD940 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		5E1962A71EBC716000CCD940 /* GridProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridProtocol.swift; sourceTree = "<group>"; };
 		5E1962A91EBC716500CCD940 /* XView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XView.swift; sourceTree = "<group>"; };
@@ -83,7 +81,6 @@
 				5E1962A51EBC715900CCD940 /* Grid.swift */,
 				5E1962A71EBC716000CCD940 /* GridProtocol.swift */,
 				5E1962A91EBC716500CCD940 /* XView.swift */,
-				5E1962A31EBC60D100CCD940 /* Constant.swift */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -161,7 +158,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E1962A41EBC60D100CCD940 /* Constant.swift in Sources */,
 				FBAD2E2B1E2BE417008207C0 /* SimulationViewController.swift in Sources */,
 				FBAD2E271E2BE417008207C0 /* AppDelegate.swift in Sources */,
 				5E1962AA1EBC716500CCD940 /* XView.swift in Sources */,

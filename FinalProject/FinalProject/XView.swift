@@ -24,7 +24,6 @@ public protocol GridViewDataSource {
     
     
     @IBInspectable var gridSize: Int = 20
-    // Updated since class
     var gridDataSource: GridViewDataSource?
     
     var xColor = UIColor.black
@@ -44,12 +43,10 @@ public protocol GridViewDataSource {
         let base = rect.origin
         (0 ..< gridSize).forEach { i in
             (0 ..< gridSize).forEach { j in
-                // Inset the oval 2 points from the left and top edges
                 let ovalOrigin = CGPoint(
                     x: base.x + (CGFloat(j) * size.width) + 2.0,
                     y: base.y + (CGFloat(i) * size.height + 2.0)
                 )
-                // Make the oval draw 2 points short of the right and bottom edges
                 let ovalSize = CGSize(
                     width: size.width - 4.0,
                     height: size.height - 4.0
@@ -75,7 +72,6 @@ public protocol GridViewDataSource {
     }
     
     func drawLines(_ rect: CGRect) {
-        //create the path
         (0 ..< (gridSize + 1)).forEach {
             drawLine(
                 start: CGPoint(x: CGFloat($0)/CGFloat(gridSize) * rect.size.width, y: 0.0),
@@ -93,17 +89,12 @@ public protocol GridViewDataSource {
     func drawLine(start:CGPoint, end: CGPoint) {
         let path = UIBezierPath()
         
-        //set the path's line width to the height of the stroke
         path.lineWidth = gridWidth
         
-        //move the initial point of the path
-        //to the start of the horizontal stroke
         path.move(to: start)
         
-        //add a point to the path at the end of the stroke
         path.addLine(to: end)
         
-        //draw the stroke
         gridColor.setStroke()
         path.stroke()
     }
@@ -120,7 +111,6 @@ public protocol GridViewDataSource {
         lastTouchedPosition = nil
     }
     
-    // Updated since class
     var lastTouchedPosition: GridPosition?
 
     func process(touches: Set<UITouch>) -> GridPosition? {

@@ -189,8 +189,6 @@ class Engine: EngineProtocol {
     func step() -> GridProtocol {
         let newGrid = grid.next()
         grid = newGrid
-//         updateClosure?(self.grid)
-        //        delegate?.engineDidUpdate(withGrid: grid)
         
         let numLiving = grid.aliveCells.count
         let numEmpty = grid.emptyCells.count

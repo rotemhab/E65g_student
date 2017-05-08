@@ -32,7 +32,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         
     }
     
-    
+    //create a function for sending notifications on instrumentation changes
     func sendNotification(){
         sizeBox.text = "\(Int(sizeStepper.value))"
         gridSize = Int(sizeStepper.value)
@@ -48,8 +48,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                                 "gridSize" : gridSize,
                                 "refreshRate" : refreshRate,
                                 "timeRefresh" : timeRefresh
-            ])
-        
+                            ])
         nc.post(n)
     }
     
@@ -64,6 +63,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         sendNotification()
     }
     
+    //create an alert for adding table rows, and get the name from the user
     @IBAction func TableAdd(_ sender: Any) {
         let alert = UIAlertController(title: "New Grid", message: "Please select a title for your new grid", preferredStyle: .alert)
         alert.addTextField { (textField) in
@@ -80,10 +80,6 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     
-
-    
-    
-    //MARK: TableView DataSource and Delegate
     func numberOfSections(in tableView: UITableView) -> Int {
         return tableTitles.count
     }
@@ -100,9 +96,10 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         return cell
     }
     
-    
+    //get the contents from the JSON file
     func FetchTitles() {
             let fetcher = Fetcher()
+            let finalProjectURL = "https://dl.dropboxusercontent.com/u/7544475/S65g.json"
             fetcher.fetchJSON(url: URL(string:finalProjectURL)!) { (json: Any?, message: String?) in
                 guard message == nil else {
                     print(message ?? "nil")
@@ -112,13 +109,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                     print("no json")
                     return
                 }
-                //print(json)
-                let resultString = (json as AnyObject).description
                 let jsonArray = json as! NSArray
-                let jsonDictionary = jsonArray[0] as! NSDictionary
-                let jsonTitle = jsonDictionary["title"] as! String
-                let jsonContents = jsonDictionary["contents"] as! [[Int]]
-                //print (jsonTitle, jsonContents)
                 OperationQueue.main.addOperation {
                     for i in 0...jsonArray.count-1 {
                         let jsonDictionary = jsonArray[i] as! NSDictionary
@@ -126,7 +117,6 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                         let jsonContents = jsonDictionary["contents"] as! [[Int]]
                         self.tableTitles.append(jsonTitle)
                         self.content.append(jsonContents)
-                        //print(jsonContents[0].max() as Int!)
                         
                     }
                         self.tableView.reloadData()
@@ -134,6 +124,8 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
             }
         }
     
+    
+    //calculate the grid size from the JSON contents
     func getGridSize(_ contentArray:[[Int]])->Int{
         var maxValue = 0
         for i in 0...contentArray.count-1 {

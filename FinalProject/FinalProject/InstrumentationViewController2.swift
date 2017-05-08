@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InstrumentationViewController2: UIViewController, GridViewDataSource, EngineDelegate {
+class InstrumentationViewController2: UIViewController, GridViewDataSource {
     
     @IBOutlet weak var gridNameTextField: UITextField!
     
@@ -16,6 +16,8 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
     var maxGridSize = 10
     var livingCellsArray:[[Int]] = []
     var livingCellsPositions:[GridPosition] = []
+    
+    //create a function for converting an array of array of Integers to an array of positions
     func livingCellsArrayToPositions(_ cellsArray:[[Int]]){
         if (cellsArray.count>1) {
         for i in 0...cellsArray.count-1{
@@ -28,6 +30,7 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
     }
     var saveClosure: ((String) -> Void)?
     
+    //create a function for initializing the grid with the living cells from the JSON file
     func gridInitializer(_ pos: GridPosition) -> CellState {
         if livingCellsPositions.contains(pos) {
             return .alive
@@ -44,7 +47,6 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         livingCellsArrayToPositions(livingCellsArray)
         if let gridTitle = gridTitle {
             gridNameTextField.text = gridTitle
@@ -52,24 +54,12 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
         engine = Engine.engine
         engine.grid = Grid(GridSize(rows: Int(maxGridSize), cols: Int(maxGridSize)),cellInitializer: gridInitializer)
         InstrumentationGridView.gridSize = maxGridSize
-        engine.delegate = self
+        engine.timerInterval = 0.0
         engine.updateClosure = { (grid) in
             self.InstrumentationGridView.setNeedsDisplay()
         }
         InstrumentationGridView.gridDataSource = self
-        let nc = NotificationCenter.default
-        let name = Notification.Name(rawValue: "EngineUpdate")
-        nc.addObserver(
-            forName: name,
-            object: nil,
-            queue: nil) { (n) in
-                self.InstrumentationGridView.setNeedsDisplay()
-        }
         
-    }
-    
-    func engineDidUpdate(withGrid: GridProtocol) {
-        self.InstrumentationGridView.setNeedsDisplay()
     }
     
     public subscript (row: Int, col: Int) -> CellState {
@@ -84,27 +74,6 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
     @IBAction func otherStop(_ sender: Any) {
     }
     
-    @IBAction func next(_ sender: Any) {
-        engine.step()
-        InstrumentationGridView.setNeedsDisplay()
-    }
-    
-    @IBAction func stop(_ sender: Any) {
-        engine.timerInterval = 0.0
-    }
-    
-    @IBAction func start(_ sender: Any) {
-        engine.timerInterval = 1.0
-    }
-    
-//    //MARK: Stepper Event Handling
-//    @IBAction func step(_ sender: UIStepper) {
-//        engine.grid = Grid(GridSize(rows: Int(sender.value), cols: Int(sender.value) + 5))
-//        InstrumentationGridView.gridSize = Int(sender.value)
-//        InstrumentationGridView.setNeedsDisplay()
-//    }
-    
-    //MARK: AlertController Handling
     func showErrorAlert(withMessage msg:String, action: (() -> Void)? ) {
         let alert = UIAlertController(
             title: "Alert",
@@ -150,7 +119,7 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
         defaults.set(diedPositions, forKey: "diedPositions")
         defaults.set(maxGridSize, forKey: "maxGridSize")
         
-        //create a new notification
+        //create a new notification to send the grid state to the simulation tab
         let nc = NotificationCenter.default
         let name = Notification.Name(rawValue: "gridSave")
         let n = Notification(name: name,

@@ -82,6 +82,9 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Cancel"
+        navigationItem.backBarButtonItem = backItem
         let indexPath = tableView.indexPathForSelectedRow
         if let indexPath = indexPath {
             let gridTitle = tableTitles[indexPath.section]

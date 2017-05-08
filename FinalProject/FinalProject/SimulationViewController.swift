@@ -101,7 +101,6 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
             object: nil,
             queue: nil) { (n) in
                 self.gridView.setNeedsDisplay()
-                //print(n.userInfo["gridSize"])
                 if let data = n.userInfo as? [AnyHashable: Any?] {
                     self.gridView.gridSize = data["gridSize"] as! Int
                 }

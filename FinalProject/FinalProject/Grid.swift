@@ -73,6 +73,22 @@ extension Grid: Sequence {
         return lazyPositions(self.size).filter { return  self[$0.row, $0.col].isAlive }
     }
     
+    fileprivate var aliveCells: [GridPosition] {
+        return lazyPositions(self.size).filter { return  self[$0.row, $0.col] == .alive }
+    }
+    
+    fileprivate var emptyCells: [GridPosition] {
+        return lazyPositions(self.size).filter { return  self[$0.row, $0.col] == .empty }
+    }
+    
+    fileprivate var bornCells: [GridPosition] {
+        return lazyPositions(self.size).filter { return  self[$0.row, $0.col] == .born }
+    }
+    
+    fileprivate var diedCells: [GridPosition] {
+        return lazyPositions(self.size).filter { return  self[$0.row, $0.col] == .died }
+    }
+    
     public struct GridIterator: IteratorProtocol {
         private class GridHistory: Equatable {
             let positions: [GridPosition]
@@ -175,11 +191,21 @@ class Engine: EngineProtocol {
         grid = newGrid
 //         updateClosure?(self.grid)
         //        delegate?.engineDidUpdate(withGrid: grid)
-          let nc = NotificationCenter.default
-          let name = Notification.Name(rawValue: "EngineUpdate")
-          let n = Notification(name: name,
+        
+        let numLiving = grid.aliveCells.count
+        let numEmpty = grid.emptyCells.count
+        let numBorn = grid.bornCells.count
+        let numDied = grid.bornCells.count
+        let nc = NotificationCenter.default
+        let name = Notification.Name(rawValue: "EngineUpdate")
+        let n = Notification(name: name,
                                object: nil,
-                               userInfo: ["engine" : self])
+                               userInfo: ["engine" : self,
+                                          "numLiving" : numLiving,
+                                          "numEmpty" : numEmpty,
+                                          "numBorn" : numBorn,
+                                          "numDied" :numDied
+                                          ])
             nc.post(n)
         return grid
     }

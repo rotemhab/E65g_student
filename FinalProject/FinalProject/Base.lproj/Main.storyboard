@@ -64,7 +64,7 @@
                                         <rect key="frame" x="0.0" y="28" width="309" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uHg-W8-X0J" id="hUp-qV-KAW">
-                                            <rect key="frame" x="0.0" y="0.0" width="309" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="309" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHr-Yj-ybz">
@@ -198,6 +198,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Grid Editor" id="0h8-Qx-4d5" userLabel="Grid Editor">
+                        <barButtonItem key="backBarButtonItem" title="Cancel" id="Zgq-nF-Lhv"/>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="pXp-fN-skX" userLabel="Save">
                             <connections>
                                 <action selector="save:" destination="sPg-a6-Vd3" id="CKG-Wj-0CL"/>
@@ -225,29 +226,103 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by SecondViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcI-j3-RMs">
-                                <rect key="frame" x="80" y="325" width="215" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Living Cells" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdf-HU-6Sa">
+                                <rect key="frame" x="56" y="118" width="87" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MnW-RE-xV6" userLabel="Living Cells Num">
+                                <rect key="frame" x="204" y="114" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="dNs-DH-MWZ"/>
+                                </constraints>
+                                <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empty Cells" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWY-d3-hjt">
+                                <rect key="frame" x="56" y="168.5" width="91" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Third View" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="n4b-9Z-QGg">
-                                <rect key="frame" x="102.5" y="275" width="170" height="42"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ATZ-gN-rQg" userLabel="Empty Cells Num">
+                                <rect key="frame" x="204" y="163" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="jrH-Te-cfu"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Born Cells" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0IM-Qw-GRH">
+                                <rect key="frame" x="56" y="219" width="78.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hCC-5K-G0i" userLabel="Born Cells Num">
+                                <rect key="frame" x="204" y="214" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="JRu-Zt-ibK"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Died Cells" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLN-xt-XXR">
+                                <rect key="frame" x="56" y="269.5" width="77" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9YM-gk-uuj" userLabel="Died Cells Num">
+                                <rect key="frame" x="204" y="265" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Yb2-CH-GWB"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17b-zJ-jei">
+                                <rect key="frame" x="320" y="52" width="39" height="30"/>
+                                <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="Reset:" destination="AUd-O1-hDt" eventType="touchUpInside" id="2G4-Q3-fUN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="YcI-j3-RMs" firstAttribute="top" secondItem="n4b-9Z-QGg" secondAttribute="bottom" constant="8" id="09d-rV-11E"/>
-                            <constraint firstItem="YcI-j3-RMs" firstAttribute="centerY" secondItem="RDO-gj-szS" secondAttribute="centerY" id="GeE-d5-MYQ"/>
-                            <constraint firstItem="YcI-j3-RMs" firstAttribute="centerX" secondItem="RDO-gj-szS" secondAttribute="centerX" id="PHs-fC-12l"/>
-                            <constraint firstItem="n4b-9Z-QGg" firstAttribute="centerX" secondItem="RDO-gj-szS" secondAttribute="centerX" id="Vye-Yv-dHj"/>
+                            <constraint firstItem="9YM-gk-uuj" firstAttribute="centerY" secondItem="gLN-xt-XXR" secondAttribute="centerY" id="0v6-ze-vsU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hCC-5K-G0i" secondAttribute="trailing" constant="55" id="3OR-y9-eXj"/>
+                            <constraint firstItem="MnW-RE-xV6" firstAttribute="centerY" secondItem="xdf-HU-6Sa" secondAttribute="centerY" id="7Kj-UQ-R79"/>
+                            <constraint firstItem="xdf-HU-6Sa" firstAttribute="top" secondItem="fsz-iE-KHf" secondAttribute="bottom" constant="98" id="9w5-yg-Khi"/>
+                            <constraint firstItem="YWY-d3-hjt" firstAttribute="leading" secondItem="RDO-gj-szS" secondAttribute="leadingMargin" constant="40" id="ARR-qm-uMg"/>
+                            <constraint firstItem="ATZ-gN-rQg" firstAttribute="centerY" secondItem="YWY-d3-hjt" secondAttribute="centerY" id="LM0-UD-Yah"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9YM-gk-uuj" secondAttribute="trailing" constant="55" id="Umo-3R-kKC"/>
+                            <constraint firstItem="0IM-Qw-GRH" firstAttribute="top" secondItem="YWY-d3-hjt" secondAttribute="bottom" constant="30" id="VLr-hp-yNf"/>
+                            <constraint firstItem="gLN-xt-XXR" firstAttribute="top" secondItem="0IM-Qw-GRH" secondAttribute="bottom" constant="30" id="XZT-SK-qdo"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ATZ-gN-rQg" secondAttribute="trailing" constant="55" id="c0B-Pb-ca3"/>
+                            <constraint firstItem="xdf-HU-6Sa" firstAttribute="leading" secondItem="RDO-gj-szS" secondAttribute="leadingMargin" constant="40" id="hd1-aT-EM4"/>
+                            <constraint firstItem="hCC-5K-G0i" firstAttribute="centerY" secondItem="0IM-Qw-GRH" secondAttribute="centerY" id="mue-JB-Mi2"/>
+                            <constraint firstItem="YWY-d3-hjt" firstAttribute="top" secondItem="xdf-HU-6Sa" secondAttribute="bottom" constant="30" id="pID-MS-Wp5"/>
+                            <constraint firstItem="0IM-Qw-GRH" firstAttribute="leading" secondItem="RDO-gj-szS" secondAttribute="leadingMargin" constant="40" id="qxw-9m-Yg5"/>
+                            <constraint firstItem="17b-zJ-jei" firstAttribute="top" secondItem="fsz-iE-KHf" secondAttribute="bottom" constant="32" id="r5Z-If-1Az"/>
+                            <constraint firstItem="gLN-xt-XXR" firstAttribute="leading" secondItem="RDO-gj-szS" secondAttribute="leadingMargin" constant="40" id="teT-WN-pAj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MnW-RE-xV6" secondAttribute="trailing" constant="55" id="uwI-5s-cJC"/>
+                            <constraint firstItem="17b-zJ-jei" firstAttribute="trailing" secondItem="RDO-gj-szS" secondAttribute="trailingMargin" id="wMR-VY-HFF"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Statistics" image="StatisticsIcon" id="dVE-EY-krj"/>
+                    <connections>
+                        <outlet property="BornNumText" destination="hCC-5K-G0i" id="bgb-bB-LxY"/>
+                        <outlet property="DiedNumText" destination="9YM-gk-uuj" id="u3W-yh-Joz"/>
+                        <outlet property="EmptyNumText" destination="ATZ-gN-rQg" id="qIJ-rs-QHv"/>
+                        <outlet property="LivingNumText" destination="MnW-RE-xV6" id="c9f-Ft-lju"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EOx-Y3-jzT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -11,6 +11,7 @@ import UIKit
 class InstrumentationViewController2: UIViewController, GridViewDataSource, EngineDelegate {
     
     @IBOutlet weak var gridNameTextField: UITextField!
+    
     var gridTitle: String?
     var maxGridSize = 10
     var livingCellsArray:[[Int]] = []
@@ -41,6 +42,7 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         livingCellsArrayToPositions(livingCellsArray)
         if let gridTitle = gridTitle {
             gridNameTextField.text = gridTitle

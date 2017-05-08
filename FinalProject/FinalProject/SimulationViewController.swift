@@ -89,6 +89,7 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
         let nc = NotificationCenter.default
         let name = Notification.Name(rawValue: "EngineUpdate")
         let name2 = Notification.Name(rawValue: "gridSave")
+        let name3 = Notification.Name(rawValue: "instrumentationChange")
         nc.addObserver(
             forName: name,
             object: nil,
@@ -106,13 +107,20 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
                 }
                 
         }
-
         
-        
-        
-
-        
-        
+        nc.addObserver(
+            forName: name3,
+            object: nil,
+            queue: nil) { (n) in
+                self.gridView.setNeedsDisplay()
+                if let data = n.userInfo as? [AnyHashable: Any?] {
+                    let newGridSize = data["gridSize"] as! Int
+                    self.gridView.gridSize = newGridSize
+                    self.engine.grid = Grid(GridSize(rows: newGridSize, cols: newGridSize))
+                    self.engine.timerInterval = data["refreshRate"] as! Double
+                }
+                
+        }
     }
     
     func engineDidUpdate(withGrid: GridProtocol) {

@@ -10,15 +10,79 @@ import UIKit
 
 class InstrumentationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    
     @IBOutlet weak var tableView: UITableView!
     var tableTitles: [String] = []
     var content: [[[Int]]] = []
     
+    @IBOutlet weak var RefreshRateSlider: UISlider!
+    @IBOutlet weak var refreshToggle: UISwitch!
+    
+    @IBOutlet weak var sizeStepper: UIStepper!
+    @IBOutlet weak var sizeBox: UITextField!
+    
+    var refreshRate : Double = 10.0
+    var timeRefresh : Bool = true
+    var gridSize: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         FetchTitles()
+        sizeBox.text = "\(Int(sizeStepper.value))"
+        
     }
+    
+    
+    func sendNotification(){
+        sizeBox.text = "\(Int(sizeStepper.value))"
+        gridSize = Int(sizeStepper.value)
+        refreshRate = Double(RefreshRateSlider.value)
+        timeRefresh = refreshToggle.isOn
+        
+        //prepare the instrumentation notification
+        let nc = NotificationCenter.default
+        let name = Notification.Name(rawValue: "instrumentationChange")
+        let n = Notification(name: name,
+                             object: nil,
+                             userInfo:[
+                                "gridSize" : gridSize,
+                                "refreshRate" : refreshRate,
+                                "timeRefresh" : timeRefresh
+            ])
+        
+        nc.post(n)
+    }
+    
+    
+    @IBAction func SizeStepperClick(_ sender: Any) {
+        sendNotification()
+    }
+    @IBAction func RefreshRateChange(_ sender: Any) {
+        sendNotification()
+    }
+    @IBAction func RefreshToggle(_ sender: Any) {
+        sendNotification()
+    }
+    
+    @IBAction func TableAdd(_ sender: Any) {
+        let alert = UIAlertController(title: "New Grid", message: "Please select a title for your new grid", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.text = "Name"
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert!.textFields![0]
+            let newGridName = textField.text!
+            self.tableTitles.append(newGridName)
+            self.tableView.reloadData()
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
 
+    
+    
     //MARK: TableView DataSource and Delegate
     func numberOfSections(in tableView: UITableView) -> Int {
         return tableTitles.count
@@ -88,8 +152,16 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         let indexPath = tableView.indexPathForSelectedRow
         if let indexPath = indexPath {
             let gridTitle = tableTitles[indexPath.section]
-            let maxGridSize = getGridSize(content[indexPath.section])*2
-            let livingCellsArray = content[indexPath.section]
+            let maxGridSize:Int
+            let livingCellsArray:[[Int]]
+            if indexPath.section <= content.count-1 {
+                maxGridSize = getGridSize(content[indexPath.section])*2
+                livingCellsArray = content[indexPath.section]
+            } else {
+                maxGridSize = Int(sizeStepper.value)
+                livingCellsArray = [[]]
+            }
+            
             if let vc = segue.destination as? InstrumentationViewController2 {
                 vc.gridTitle = gridTitle
                 vc.maxGridSize = maxGridSize

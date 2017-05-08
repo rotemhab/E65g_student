@@ -17,11 +17,13 @@ class InstrumentationViewController2: UIViewController, GridViewDataSource, Engi
     var livingCellsArray:[[Int]] = []
     var livingCellsPositions:[GridPosition] = []
     func livingCellsArrayToPositions(_ cellsArray:[[Int]]){
+        if (cellsArray.count>1) {
         for i in 0...cellsArray.count-1{
             var pos : GridPosition = GridPosition(row:0,col:0)
             pos.row = cellsArray[i][0]
             pos.col = cellsArray[i][1]
             self.livingCellsPositions.append(pos)
+        }
         }
     }
     var saveClosure: ((String) -> Void)?
